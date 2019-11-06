@@ -69,8 +69,8 @@
                             <span>￥0.00</span>
                         </div>
                     </div>
-                </el-checkbox> -->
-          </el-checkbox-group>
+                </el-checkbox>
+          </el-checkbox-group>-->
 
         </div>
 		<button class="mint-button mint-button--default mint-button--large" v-no-more-click  @click="submit()">
@@ -92,22 +92,15 @@ import moment from 'moment'
 export default {
 	data() {
 		return {
-			radio: '1',
             checkbox:[],
-			uploadDisabled:false,
 			options:[],
-            value:[],
 			TotalMoney:0.00,
 			TotalMoneyFormat:0.00,
 			ReceivableRecordIds:[],
 			checklists: [],
 	        PStructId: getCookie("PStructId"),
 			// cmpCode: "getCookie("cmpCode")",
-			cmpCode: "",
-			textarea:'',
-			dialogImageUrl: defaultImg,
-		    dialogVisible: false,
-			AddHide:true,
+			cmpCode: ""
 			}
 	},
 	beforeRouteEnter(to, from, next) {
@@ -117,7 +110,7 @@ export default {
 		})
 	},
 	mounted() {
-		var that = this;
+		let that = this;
 		queryPubRoomRelaInfoList({}).then(res =>{
 			if(res.Status == 200){
 				that.options = res.Data;
@@ -171,7 +164,7 @@ export default {
 			this.GetArticleDetail();
 		},
 		GetArticleDetail() {
-			var that = this;
+            let that = this;
 			if(that.PStructId){
 				that.options.forEach(function (v) {
 					console.log(v);
@@ -211,7 +204,7 @@ export default {
         chooseOrder(e,money,id,ids){
             if (e.target.className.indexOf("selected") == -1) {
                 e.target.className = "el-icon-success selected"; //切换按钮样式
-                var json = {
+                let json = {
 					id:id,
                     ids:ids,
                     money:money,
@@ -270,8 +263,8 @@ export default {
 						setCookie("FuKuanId",res.Data);
 						setCookie("Money",this.TotalMoney);
 						// delCookie("PayType");
-						// var Domain = getCookie("Domain");
-						var Domain = document.location.origin;
+						// let Domain = getCookie("Domain");
+                        let Domain = document.location.origin;
 						location.assign(Domain +"/pay/payList")
 						// this.$router.push("/pay/payList");
 					}else {
@@ -303,7 +296,7 @@ export default {
 			// 			setCookie("Money",this.TotalMoney);
 			// 			delCookie("PayType");
 			// 	        delCookie("orderId");
-			// 			var Domain = getCookie("Domain");
+			// 			let Domain = getCookie("Domain");
 			// 			location.assign(Domain +"/pay/payList")
 			// 			// this.$router.push("/pay/payList");
 			// 		}else {
@@ -333,7 +326,7 @@ export default {
   			 return "";
   		  }
   		  //moment.locale('en'); //日期格式汉化
-  		  var localLocale = moment(date).utcOffset(480).format('YYYY-MM-DD');
+  		  let localLocale = moment(date).utcOffset(480).format('YYYY-MM-DD');
   		  return localLocale;
   	  }
     }

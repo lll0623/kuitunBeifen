@@ -117,7 +117,7 @@ export default {
 							});
 							return;
 						}
-						var parm = {
+						let parm = {
 							pStructId:this.radio
 						}
 						setDefaultPubRoom(parm).then(res =>{

@@ -372,3 +372,7 @@ export const roomBindingApply = params => {
 export const getRoomBindingApplyOpenID = params => {
   return service.post('/Pub/RoomBindingApply/GetRoomBindingApplyOpenID',params).then(response => response.data)
 }
+// 通过二维码绑定房产
+export const addPubRoomRelaByQRCode = params => {
+    return service.post('/Rs/WxPStruct/AddPubRoomRelaByQRCode',params).then(response => response.data)
+}

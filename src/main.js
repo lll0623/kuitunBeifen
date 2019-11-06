@@ -30,7 +30,7 @@ Vue.use(VueRouter)
 import VueJsonp from 'vue-jsonp'
 Vue.use(VueJsonp)
 // Require dependencies
-var VueCookie = require('vue-cookie');
+let VueCookie = require('vue-cookie');
 // Tell Vue to use the plugin
 Vue.use(VueCookie);
 
@@ -55,8 +55,8 @@ new Vue({
     template: '<App/>'
 })
 router.beforeResolve((to,from,next) => {
-    var u = navigator.userAgent;
-     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    let u = navigator.userAgent;
+    let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
     if(!getCookie("Token") || typeof(getCookie("Token"))=="undefined" || getCookie("Token") == null){
         setCookie("beforeUrl",to.fullPath);
         let redirect_uri = encodeURIComponent(window.location.href);
@@ -70,7 +70,7 @@ router.beforeResolve((to,from,next) => {
            CODE = parseUrl.code
        }
         // console.log(CODE)
-         var parm = {
+        let parm = {
              code:CODE,
              state:""
          }
@@ -80,7 +80,6 @@ router.beforeResolve((to,from,next) => {
                 APPID = res.Data.AppId;
                 setCookie("ImageDomain",res.Data.ImageDomain);
                 setCookie("Domain",res.Data.Domain);
-
             }else {
                 Toast({
                     message: res.Message,
@@ -98,7 +97,7 @@ router.beforeResolve((to,from,next) => {
                 // setCookie("AccountId",res.Data.AccountId);
                 setCookie("HasBindPhone",res.Data.HasBindPhone);
                 setCookie("UserId",res.Data.UserId);
-                var beforeUrl = getCookie("beforeUrl");
+                let beforeUrl = getCookie("beforeUrl");
                 window.location.href = beforeUrl
             }else {
                 // 跳转到微信授权页面
@@ -121,8 +120,7 @@ router.beforeResolve((to,from,next) => {
     else if(isiOS && to.path !== location.pathname) {
         location.assign(to.fullPath)
     }else if(!!getCookie("PStructId") && to.meta.BindStatus === true && window.config.BindStatus === true) { // 需要判断房产是否审批的页面
-
-        var parm = {
+        let parm = {
             pStructId:getCookie("PStructId")
         }
         getPStructBindStatus(parm).then(res =>{
