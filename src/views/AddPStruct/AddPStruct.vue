@@ -106,34 +106,72 @@ export default {
                     needResult : 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
                     scanType : [ "qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
                     success : function(res) {
-                        let result = JSON.parse(res.resultStr); // 当needResult 为 1 时，扫码返回的结果
-                        MessageBox.confirm('您将于【'+ result.L +'】进行绑定，确认绑定？', '提示', {
-                            showConfirmButton: true,
-                            confirmButtonText:'确认绑定',
-                            showCancelButton: true,
-                            cancelButtonText:'取消'
-                        }).then(() => {
-                            // let nowTime = (new Date()).getTime();
-                            // if(nowTime > result.T){
-                            //     Toast({
-                            //         message: "该二维码已失效！",
-                            //         position: 'top',
-                            //         iconClass: 'fa fa-close',
-                            //         duration: 3000
-                            //     });
-                            //     return;
-                            // }else {
-                                that.AddPubRoomRelaByQRCode(result.V);
-                            // }
-                            
-                        }).catch(() => {
-                            Toast({
-                                message: "已取消",
-                                position: 'top',
-                                duration: 3000
+                        //alert(JSON.stringify(res.resultStr));
+                        try {
+                            if (typeof JSON.parse(res.resultStr) == 'object') {
+                                let result = JSON.parse(res.resultStr); // 当needResult 为 1 时，扫码返回的结果
+                                //alert(typeof JSON.parse(res.resultStr) == 'object');
+                                if(result.hasOwnProperty("L")) {
+                                    MessageBox.confirm('您将于【' + result.L + '】进行绑定，确认绑定？', '提示', {
+                                        showConfirmButton: true,
+                                        confirmButtonText: '确认绑定',
+                                        showCancelButton: true,
+                                        cancelButtonText: '取消'
+                                    }).then(() => {
+                                        // let nowTime = (new Date()).getTime();
+                                        // if(nowTime > result.T){
+                                        //     Toast({
+                                        //         message: "该二维码已失效！",
+                                        //         position: 'top',
+                                        //         iconClass: 'fa fa-close',
+                                        //         duration: 3000
+                                        //     });
+                                        //     return;
+                                        // }else {
+                                        that.AddPubRoomRelaByQRCode(result.V);
+                                        // }
+
+                                    }).catch(() => {
+                                        Toast({
+                                            message: "已取消",
+                                            position: 'top',
+                                            duration: 3000
+                                        });
+                                    });
+                                }
+                            }else{
+                                MessageBox.confirm('是否继续扫描？', '无效二维码！', {
+                                    showConfirmButton: true,
+                                    confirmButtonText:'确认',
+                                    showCancelButton: true,
+                                    cancelButtonText:'取消'
+                                }).then(() => {
+                                    that.scanQRCode()
+                                }).catch(() => {
+                                    Toast({
+                                        message: "已取消",
+                                        position: 'top',
+                                        duration: 3000
+                                    });
+                                });
+                            }
+                        } catch(e) {
+                            // alert(JSON.stringify(res));
+                            MessageBox.confirm('是否继续扫描？', '无效二维码！', {
+                                showConfirmButton: true,
+                                confirmButtonText:'确认',
+                                showCancelButton: true,
+                                cancelButtonText:'取消'
+                            }).then(() => {
+                                that.scanQRCode()
+                            }).catch(() => {
+                                Toast({
+                                    message: "已取消",
+                                    position: 'top',
+                                    duration: 3000
+                                });
                             });
-                        });
-                        
+                        }
                     },
                     fail : function(res) {
                         alert(JSON.stringify(res));
