@@ -14,7 +14,7 @@
     "analyz": "NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.6.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
